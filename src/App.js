@@ -1,81 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
+import './App.css';
 
+/*
+This exercise will help you practice many of your newly aquired React skills.
 
-const TaskList = ({tasks,newTasksState }) => {
+The instructions are included in the `instructions.md` file.
+*/
 
-  const deleteItem = id => {
-    newTasksState(tasks.filter(element => element.id !== id ))
-  }
+class App extends Component {
+  state = {
+    chatValue: '',
+    users: [{ username: 'Amy' }, { username: 'John' }],
+    messages: [
+      { username: 'Amy', text: 'Hi, Jon!' },
+      { username: 'Amy', text: 'How are you?' },
+      { username: 'John', text: 'Hi, Amy! Good, you?' },
+    ],
+  };
+  /*
+  If the user did not type anything, he/she should not be
+  allowed to submit.
+  */
 
-  const changeCheckField = id => {
-    newTasksState(tasks.map(element => {
-      if(element.id === id){
-        if(element.checked === false){
-          element.checked = true;
-        }else{
-          element.checked = false;
-        }
-      }
-      return element;
-    }))
-  }
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
 
-  return (
-    <ul>
-    {tasks.map(element => {
-      return (
-        <div>
-          <li key={element.id}>
-            {element.name}
-            <button onClick={() => deleteItem(element.id)}>Delete</button>
-            <button onClick={() => changeCheckField(element.id)}>{element.checked ? "True" : "False"}</button>
-          </li>
+  handleSubmit = (event, userName) => {
+    event.preventDefault();
+    this.setState((oldState) => ({
+      messages: [
+        ...oldState.messages,
+        { username: userName, text: this.state.chatValue },
+      ],
+    }));
+  };
+
+  // isDisabled = (userName) => {
+  //   const inputVal = this.state.chatValue;
+  //   const chatUsers = this.state.users;
+  //   for (const user of chatUsers) {
+  //     if (userName === user.username) {
+  //       if (inputVal === '') {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  // };
+
+  render() {
+    const { chatValue, users, messages } = this.state;
+    console.log(chatValue);
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">ReactND - Coding Practice</h1>
+        </header>
+        <div className="container">
+          {users.map((us) => (
+            <div className="chat-window">
+              <h2>Super Awesome Chat</h2>
+              <div className="name sender">{us.username}</div>
+
+              <ul className="message-list">
+                {messages.map((message, index) => (
+                  <li
+                    key={index}
+                    className={
+                      message.username === us.username
+                        ? 'message sender'
+                        : 'message recipient'
+                    }
+                  >
+                    <p>{`${message.username}: ${message.text}`}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <div>
+                <form
+                  className="input-group"
+                  onSubmit={() => this.handleSubmit(us.username)}
+                >
+                  <input
+                    onChange={this.handleChange}
+                    name={us.username}
+                    defaultValue={chatValue}
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter your message..."
+                  />
+                  <div className="input-group-append">
+                    <button className="btn submit-button">SEND</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          ))}
         </div>
-      )
-    })}
-    </ul>
-  )
-}
-
-
-function App() {
-  const [listOfTasks, setListOfTasks] = useState([
-  { id: 0, checked: true, name: 'Eat breakfast' },
-  { id: 1, checked: false, name: 'Read a book' }
-])
-  const [newTask, setNewTask] = useState('') 
-
-  useEffect(() => {
-    return listOfTasks;
-  },[listOfTasks])
-
-  const addNewTask = e => {
-    setNewTask(e.target.value);
-  } 
-
-  const newTaskAdded = () => {
-    setListOfTasks(oldArray => [...oldArray, { id: 2, checked: false, name: newTask }])
-    
-  }
-
-  
-  console.log("TASKS===>", listOfTasks)
-  
-  return (
-    <>
-      <h1>Today</h1>
-      <div className="wrapper">
-        <TaskList 
-        tasks={listOfTasks}
-        newTasksState={setListOfTasks}
-        />
-        <input 
-        onChange={addNewTask}
-        placeholder="Create a new todo" />
-        <button onClick={newTaskAdded}>Create</button>
       </div>
-    </>
-  );
+    );
+  }
 }
 
 export default App;
