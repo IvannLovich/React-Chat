@@ -4,18 +4,15 @@ class Form extends Component {
   state = {
     johnChatValue: '',
     amyChatValue: '',
-    disabledButtons: -1,
   };
 
-  handleChange = (event, userName, index) => {
+  handleChange = (event, userName) => {
     userName === 'Amy'
       ? this.setState({
           amyChatValue: event.target.value,
-          disabledButtons: index,
         })
       : this.setState({
           johnChatValue: event.target.value,
-          disabledButtons: index,
         });
   };
 
@@ -26,6 +23,18 @@ class Form extends Component {
         ? this.state.amyChatValue
         : this.state.johnChatValue,
     );
+  };
+
+  disabledButton = (userName) => {
+    if (userName === 'Amy') {
+      if (this.state.amyChatValue === '') {
+        return true;
+      }
+    } else {
+      if (this.state.johnChatValue === '') {
+        return true;
+      }
+    }
   };
 
   render() {
@@ -44,7 +53,7 @@ class Form extends Component {
           <div className="input-group-append">
             <button
               className="btn submit-button"
-              disabled={this.state.disabledButtons !== index}
+              disabled={this.disabledButton(user.username)}
             >
               SEND
             </button>
