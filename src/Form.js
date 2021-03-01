@@ -17,21 +17,23 @@ class Form extends Component {
   };
 
   addMessage = (event) => {
+    const { user, onAdd } = this.props;
     event.preventDefault();
-    this.props.onAdd(
-      this.props.user.username === 'Amy'
+    onAdd(
+      user.username === 'Amy'
         ? this.state.amyChatValue
         : this.state.johnChatValue,
     );
   };
 
   disabledButton = (userName) => {
+    const { amyChatValue, johnChatValue } = this.state;
     if (userName === 'Amy') {
-      if (this.state.amyChatValue === '') {
+      if (amyChatValue === '') {
         return true;
       }
     } else {
-      if (this.state.johnChatValue === '') {
+      if (johnChatValue === '') {
         return true;
       }
     }
