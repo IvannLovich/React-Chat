@@ -14,22 +14,8 @@ class Form extends Component {
   addMessage = (event) => {
     const { onAdd } = this.props;
     event.preventDefault();
-
     onAdd(this.state.chatValue);
   };
-
-  // disabledButton = (userName) => {
-  //   const { amyChatValue, johnChatValue } = this.state;
-  //   if (userName === 'Amy') {
-  //     if (amyChatValue === '') {
-  //       return true;
-  //     }
-  //   } else {
-  //     if (johnChatValue === '') {
-  //       return true;
-  //     }
-  //   }
-  // };
 
   render() {
     const { amyChatValue, johnChatValue } = this.state;
