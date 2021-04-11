@@ -2,51 +2,43 @@ import React, { Component } from 'react';
 
 class Form extends Component {
   state = {
-    johnChatValue: '',
-    amyChatValue: '',
+    chatValue: '',
   };
 
-  handleChange = (event, userName) => {
-    userName === 'Amy'
-      ? this.setState({
-          amyChatValue: event.target.value,
-        })
-      : this.setState({
-          johnChatValue: event.target.value,
-        });
+  handleChange = (event) => {
+    this.setState({
+      chatValue: event.target.value,
+    });
   };
 
   addMessage = (event) => {
-    const { user, onAdd } = this.props;
+    const { onAdd } = this.props;
     event.preventDefault();
-    onAdd(
-      user.username === 'Amy'
-        ? this.state.amyChatValue
-        : this.state.johnChatValue,
-    );
+
+    onAdd(this.state.chatValue);
   };
 
-  disabledButton = (userName) => {
-    const { amyChatValue, johnChatValue } = this.state;
-    if (userName === 'Amy') {
-      if (amyChatValue === '') {
-        return true;
-      }
-    } else {
-      if (johnChatValue === '') {
-        return true;
-      }
-    }
-  };
+  // disabledButton = (userName) => {
+  //   const { amyChatValue, johnChatValue } = this.state;
+  //   if (userName === 'Amy') {
+  //     if (amyChatValue === '') {
+  //       return true;
+  //     }
+  //   } else {
+  //     if (johnChatValue === '') {
+  //       return true;
+  //     }
+  //   }
+  // };
 
   render() {
     const { amyChatValue, johnChatValue } = this.state;
-    const { index, user } = this.props;
+    const { user } = this.props;
     return (
       <div>
         <form className="input-group" onSubmit={this.addMessage}>
           <input
-            onChange={(event) => this.handleChange(event, user.username, index)}
+            onChange={(event) => this.handleChange(event)}
             defaultValue={user.name === 'Amy' ? amyChatValue : johnChatValue}
             type="text"
             className="form-control"
@@ -55,7 +47,7 @@ class Form extends Component {
           <div className="input-group-append">
             <button
               className="btn submit-button"
-              disabled={this.disabledButton(user.username)}
+              disabled={this.state.chatValue === ''}
             >
               SEND
             </button>
