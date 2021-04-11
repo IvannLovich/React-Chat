@@ -18,14 +18,13 @@ class Form extends Component {
   };
 
   render() {
-    const { amyChatValue, johnChatValue } = this.state;
-    const { user } = this.props;
+    const { chatValue } = this.state;
     return (
       <div>
         <form className="input-group" onSubmit={this.addMessage}>
           <input
             onChange={(event) => this.handleChange(event)}
-            defaultValue={user.name === 'Amy' ? amyChatValue : johnChatValue}
+            defaultValue={chatValue}
             type="text"
             className="form-control"
             placeholder="Enter your message..."
