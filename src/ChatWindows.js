@@ -47,7 +47,7 @@ class ChatWindows extends Component {
             <Form
               index={index}
               user={us}
-              onAdd={(event) => this.handleSubmit(event, us.username)}
+              onAdd={(text) => this.handleSubmit(text, us.username)}
             />
           </div>
         ))}
