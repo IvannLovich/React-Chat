@@ -23,7 +23,7 @@ class Form extends Component {
       <div>
         <form className="input-group" onSubmit={this.addMessage}>
           <input
-            onChange={(event) => this.handleChange(event)}
+            onChange={this.handleChange}
             defaultValue={chatValue}
             type="text"
             className="form-control"
