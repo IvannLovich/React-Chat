@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-
 import ChatWindows from './ChatWindows';
-
-/*
-This exercise will help you practice many of your newly aquired React skills.
-
-The instructions are included in the `instructions.md` file.
-*/
+import './App.css';
 
 class App extends Component {
   /*
